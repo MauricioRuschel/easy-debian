@@ -148,7 +148,7 @@ class Core
   # Method to convert the files to unix format, in some cases we need this feature
   # so is better has a method to handle it.
   def convert_file(files=[])
-    dos2unix = '/usr/bin/dos2unix'
+    dos2unix = '/usr/bin/dos2unix -q'
     files.each do |file|
       convert = system("#{dos2unix} #{file}")
       check_status(convert, "Converting the file: #{file}")
@@ -221,10 +221,15 @@ repositories_path = '/etc/apt/sources.list'
 vimrc_path = "#{Dir.home}/.vimrc"
 bashrc_root_path = "#{Dir.home}/.bashrc"
 bashrc_common_path = "/etc/skel/.bashrc"
+crontab_path = '/tmp/crontab'
+
+# Defining some urls
+debian_rep_url = "https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/sources-#{os_version_name}.list"
 vimrc_url = 'https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/vimrc'
 bashrc_root_url = 'https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/bashrc_root'
 bashrc_common_url = 'https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/bashrc_common'
-debian_rep_url = "https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/sources-#{os_version_name}.list"
+crontab_url = 'https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/crontab'
+
 
 # Getting the repositories
 # TODO: Check the Debian Version and get the paths based on it.
@@ -274,6 +279,12 @@ new_deb.download_files(vimrc_path,vimrc_url)
 # Getting the bashrc configuration file
 new_deb.download_files(bashrc_root_path,bashrc_root_url)
 new_deb.download_files(bashrc_common_path,bashrc_common_url)
+
+# Getting the crontab configuration file
+new_deb.download_files(crontab_path,crontab_url)
+
+# Importing the crontab
+new_deb.exec_command("/usr/bin/crontab -r; /usr/bin/crontab #{crontab_path}")
 
 # Converting the file
 new_deb.convert_file(files=["#{vimrc_path}","#{bashrc_root_path}","#{bashrc_common_path}"])

@@ -26,7 +26,7 @@ export HISTTIMEFORMAT="%h/%d - %H:%M:%S "
 TZ='America/Sao_Paulo'; export TZ
 
 # SOURCE GLOBAL DEFINITIONS
-If [ -f /etc/bashrc ]; then
+if [ -f /etc/bashrc ]; then
         . /etc/bashrc
 fi
 
