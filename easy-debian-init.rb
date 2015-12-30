@@ -114,7 +114,7 @@ class Core
       File.open("#{path}", 'w') do |saved_file|
         # the following "open" is provided by open-uri
         open("#{url}", 'User-Agent' => "Ruby/#{RUBY_VERSION}") do |read_file|
-          puts "#{Tty.blue}The file: #{Tty.white}#{path} was downloaded and saved! #{Tty.reset}" if saved_file.write(read_file.read)
+          puts "#{Tty.blue}The file: #{Tty.white}#{path}#{Tty.blue} was downloaded and saved! #{Tty.reset}" if saved_file.write(read_file.read)
         end
       end
     else
@@ -130,13 +130,21 @@ class Core
     end
   end
 
+  # Method to create automatically backup of the files before overwrite them.
+  def check_dir_exits(dir)
+    if Dir.exists?(dir)
+      check_mv = FileUtils.move(dir,"#{dir}.bkp")
+      check_status(check_mv,"Creating a backup of directory: #{Tty.white} #{dir} #{Tty.reset}")
+    end
+  end
+
   # Method to handle the keyrings, here we can update a lot of keys only sending
   # as an array.
   def conf_keyrings(url,keys=[])
     gpg = '/usr/bin/gpg'
     keys.each do |key|
       import_key = system "#{gpg} --keyserver #{url} --recv-keys #{key}"
-      check_status(import_key,'Updating Keyrings')
+      check_status(import_key,"Updating #{Tty.white}#{key}#{Tty.blue} in the Keyring")
       sleep_time(2)
     end
 
@@ -151,7 +159,35 @@ class Core
     dos2unix = '/usr/bin/dos2unix -q'
     files.each do |file|
       convert = system("#{dos2unix} #{file}")
-      check_status(convert, "Converting the file: #{file}")
+      check_status(convert, "Converting the file: #{Tty.white}#{file}#{Tty.blue}")
+    end
+  end
+
+  # Method to configure the crontab
+  def conf_crontab(path)
+    crontab = '/usr/bin/crontab'
+    bkp_crontab = system("#{crontab} -l > crontab.bkp")
+    check_status(bkp_crontab, "Creating backup of #{Tty.white}crontab#{Tty.blue} file")
+    remove_crontab = system("#{crontab} -r")
+    check_status(remove_crontab, "Removing the #{Tty.white}crontab#{Tty.blue} configuration")
+    add_crontab = system("#{crontab} #{path}")
+    check_status(add_crontab, "Adding the new #{Tty.white}crontab#{Tty.blue} configuration")
+  end
+
+  # Method to get git repositories
+  def get_git(path,url,comment,copy)
+    git = '/usr/bin/git'
+    cp = '/bin/cp'
+    check_dir_exits(path)
+    check_git = system("#{git} clone #{url} #{path}")
+    check_status(check_git, "Cloning the #{Tty.white}#{comment}#{Tty.reset}")
+    if !copy.empty?
+        if Dir.exists?(copy)
+          copy_repo = system("#{cp} -Rfa #{path}/* #{copy}")
+          check_status(copy_repo, "Copying the #{Tty.white}#{comment} #{Tty.blue}to #{Tty.white} #{copy} ")
+        else
+          puts "#{Tty.red}The directory #{Tty.white}#{copy} #{Tty.red}does not exists!#{Tty.reset}"
+        end
     end
   end
 
@@ -222,6 +258,8 @@ vimrc_path = "#{Dir.home}/.vimrc"
 bashrc_root_path = "#{Dir.home}/.bashrc"
 bashrc_common_path = "/etc/skel/.bashrc"
 crontab_path = '/tmp/crontab'
+firmware_path = '/usr/src/firmware'
+firmware_copy_path = '/lib/firmware/'
 
 # Defining some urls
 debian_rep_url = "https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/sources-#{os_version_name}.list"
@@ -229,10 +267,9 @@ vimrc_url = 'https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/v
 bashrc_root_url = 'https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/bashrc_root'
 bashrc_common_url = 'https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/bashrc_common'
 crontab_url = 'https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/crontab'
-
+firmware_url = 'git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git'
 
 # Getting the repositories
-# TODO: Check the Debian Version and get the paths based on it.
 new_deb.download_files(repositories_path,debian_rep_url)
 
 # Defining the architecture of box
@@ -283,8 +320,11 @@ new_deb.download_files(bashrc_common_path,bashrc_common_url)
 # Getting the crontab configuration file
 new_deb.download_files(crontab_path,crontab_url)
 
-# Importing the crontab
-new_deb.exec_command("/usr/bin/crontab -r; /usr/bin/crontab #{crontab_path}")
+# Configuring the crontab
+new_deb.conf_crontab(crontab_path)
 
 # Converting the file
 new_deb.convert_file(files=["#{vimrc_path}","#{bashrc_root_path}","#{bashrc_common_path}"])
+
+# Getting the new firmwares
+new_deb.get_git(firmware_path,firmware_url,'Kernel Firmwares',firmware_copy_path)
