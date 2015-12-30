@@ -36,6 +36,19 @@ After that you can execute the Ruby script as following
 ````bash
 ./easy-debian-init.rb
 ```
+If you are working behind a proxy server you need to initialize the the class with proxy parameters change the instance in the line 331
+```ruby
+[...]
+# Creating a new object to use the methods
+# Usage examples:
+# Without proxy
+# new_deb = EasyDebian::Core.new()
+# Using only server and port for proxy connection
+# new_deb = EasyDebian::Core.new("10.0.0.254", "3128")
+# Using server, port, user and password for proxy connection
+# new_deb = EasyDebian::Core.new("<http proxy URL>", "<port >", "Proxy user name", "Proxy Password")
+new_deb = EasyDebian::Core.new()
+```
 
 ## Version
 This is the beta version yet and I am working to improve and add some new features and this version is working properly.
