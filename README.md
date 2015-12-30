@@ -40,6 +40,11 @@ After that you can execute the Ruby script as following
 ## Version
 This is the beta version yet and I am working to improve and add some new features and this version is working properly.
 
+The current version support the following Debian GNU/Linux Versions
+* Squeeze
+* Wheezy
+* Jessie
+
 ## Security Vulnerabilities
 
 If you discover a security vulnerability within easy-debian, please send an e-mail to Douglas Quintiliano dos Santos at douglas.dksh@gmail.com. All security vulnerabilities will be promptly addressed.
