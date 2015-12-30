@@ -15,6 +15,14 @@
 
 Easy-Debian is a ruby script that can help you to up and running with Debian GNU/Linux easily and install and configure some features such as repositories, essential packages that help us with the Debian administration, crontab basic configuration, vim theme, basic bashrc configuration and update the firmwares from the kernel git repository.
 
+## How to use
+
+You can install the **curl** package in your Debian GNU/Linux and execute the following command line as root user
+
+```bash
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/easy-debian-init.rb)"
+```
+
 ## Version
 This is the beta version yet and I am working to improve and add some new features and this version is working properly.
 
