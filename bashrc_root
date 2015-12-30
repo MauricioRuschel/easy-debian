@@ -1,0 +1,34 @@
+# ~/.bashrc
+
+### COLORS AVAILABLE
+GREY="[\033[01;30m\]" RED="\033[01;31m\]" GREEN="\033[01;32m\]" YELLOW="\033[01;33m\]"
+BLUE="\033[01;34m\]" PURPLE="\033[01;35m\]" CYAN="\033[01;36m\]" WHITE="\033[01;37m\]"
+CLOSE="\033[00m\]"
+
+# TIPS ABOUT PS1: http://www.cyberciti.biz/tips/howto-linux-unix-bash-shell-setup-prompt.html
+PS1="${RED}\u@\h${CLOSE}:${BLUE}\w${CLOSE}# "
+
+# SET UP SOME ALIAS
+alias ls='ls --color=auto'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias df='df -Th'
+
+# SET UP THE DEFAULT EDITOR, THE HISTORY FORMAT AND THE TIME ZONE
+export EDITOR=vim
+export HISTTIMEFORMAT="%h/%d - %H:%M:%S "
+TZ='America/Sao_Paulo'; export TZ
+
+# SOURCE GLOBAL DEFINITIONS
+If [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+
+# ENABLE RECEIVE MSG FROM ANOTHER USER
+mesg y

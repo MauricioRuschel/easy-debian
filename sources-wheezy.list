@@ -14,7 +14,7 @@ deb-src http://ftp.br.debian.org/debian wheezy-proposed-updates main contrib non
 #deb http://ftp.br.debian.org/debian wheezy-backports main contrib non-free
 #deb-src http://ftp.br.debian.org/debian wheezy-backports main contrib non-free
 
-# BACKPORT  REPOSITORY
+# BACKPORT  REPOSITORY http://backports.debian.org/Mirrors/
 #deb http://www.backports.org/debian wheezy-backports main contrib non-free
 #deb-src http://www.backports.org/debian wheezy-backports main contrib non-free
 
@@ -23,12 +23,6 @@ deb-src http://ftp.br.debian.org/debian wheezy-proposed-updates main contrib non
 #deb http://www.debian-multimedia.org wheezy main
 
 # PHP5 BACKPORT
-#deb http://packages.dotdeb.org wheezy all
-#deb-src http://packages.dotdeb.org wheezy all
+#deb http://packages.dotdeb.org wheezy-php56 all
+#deb-src http://packages.dotdeb.org wheezy-php56 all
 
-#deb http://packages.dotdeb.org wheezy-php55 all
-#deb-src http://packages.dotdeb.org wheezy-php55 all
-
-# REPOSITORY FOR POSTFIX-VDA
-#deb http://debian.home-dn.net/wheezy postfix-vda/
-#deb-src http://debian.home-dn.net/wheezy postfix-vda/

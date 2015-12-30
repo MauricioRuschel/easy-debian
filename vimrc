@@ -128,7 +128,7 @@ match RedundantWhitespace /\s\+$\| \+\ze\t/
 " Also load indent files, to automatically do language-dependent indenting.
 "filetype plugin indent on
 
-"Function to add the header in the new script files
+"Function to add the header in the new shell script files
 fun! InsertHeadBash()
    normal(1G)
    :set ft=bash
@@ -162,6 +162,16 @@ fun! InsertHeadBash()
 endfun
 map ,sh :call InsertHeadBash()<cr>
 
+"Function to add the header in the new ruby script files
+fun! InsertHeadRuby()
+   normal(1G)
+   :set ft=ruby
+   call append(0, "#!/usr/bin/env ruby")
+   call append(1, "# encoding: UTF-8")
+   normal($)
+endfun
+map ,rb :call InsertHeadRuby()<cr>
+
 " When enter in the insert mode changes the status bar color
 " Change the status bar color depending on the mode
 if version >= 700
@@ -176,6 +186,10 @@ endif
 
 "When a new shell script is created automatically is append a header with some information that can be seen above
 au BufEnter *.sh if getline(1) == "" | :call InsertHeadBash() | endif
+
+"When a new ruby script is created automatically is append a header with some information that can be seen above
+au BufEnter *.rb if getline(1) == "" | :call InsertHeadRuby() | endif
+
 " Needs to be in the normal mode!
 nmap <C-Down> ddp
 nmap <C-Up> ddkP

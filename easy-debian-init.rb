@@ -153,7 +153,43 @@ class Core
       convert = system("#{dos2unix} #{file}")
       check_status(convert, "Converting the file: #{file}")
     end
+  end
 
+  # Method to get the OS version, it will be used for the another scripts
+  def check_os_version(os)
+    cat = '/bin/cat'
+    debian_version = '/etc/debian_version'
+    centos_version = '/etc/redhat-relase'
+
+    os_availables = %w(debian centos)
+    if os_availables.include?(os.downcase)
+      if os == 'debian'
+        if File.exists?(debian_version)
+          os_version = `#{cat} #{debian_version}`.chomp[/\d+/]
+          case os_version
+            when '6'
+              return os_version_name = 'squeeze'
+            when '7'
+              return os_version_name = 'wheezy'
+            when '8'
+              return os_version_name = 'jessie'
+            else
+              puts "#{Tty.red}The Debian given does not have support yet! #{Tty.reset}"
+          end
+        else
+          puts "#{Tty.red}The #{Tty.white}#{debian_version}#{Tty.red} does not exists! #{Tty.reset}"
+        end
+      elsif os == 'centos'
+        if File.exists?(centos_version)
+          os_version_name = `#{cat} #{centos_version}`.chomp[/\d+/]
+        else
+          puts "#{Tty.red}The #{Tty.white}#{centos_version}#{Tty.red} does not exists! #{Tty.reset}"
+        end
+      end
+    else
+      puts "#{Tty.red}The OS given does not have support yet! #{Tty.reset}"
+    end
+    return os_version_name
   end
 
   # Private methods that can be called only inside the Class
@@ -171,38 +207,63 @@ end
 
 ### END OF THE CORE CLASS
 
-
-# Defining some paths
-repositories_path = '/etc/apt/sources.list'
-vimrc_path = "#{Dir.home}/.vimrc"
-vimrc_url = 'https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/vimrc'
-rep_wheezy_url = 'https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/sources-wheezy.list'
+# GLOBAL Variables
+os_version = 'debian'
 
 # Creating a new object to use the methods
 new_deb = Core.new
 
+# Check the os Version
+os_version_name = new_deb.check_os_version("#{os_version}")
+
+# Defining some paths
+repositories_path = '/etc/apt/sources.list'
+vimrc_path = "#{Dir.home}/.vimrc"
+bashrc_root_path = "#{Dir.home}/.bashrc"
+bashrc_common_path = "/etc/skel/.bashrc"
+vimrc_url = 'https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/vimrc'
+bashrc_root_url = 'https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/bashrc_root'
+bashrc_common_url = 'https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/bashrc_common'
+debian_rep_url = "https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/sources-#{os_version_name}.list"
+
 # Getting the repositories
 # TODO: Check the Debian Version and get the paths based on it.
-new_deb.download_files(repositories_path,rep_wheezy_url)
+new_deb.download_files(repositories_path,debian_rep_url)
 
 # Defining the architecture of box
 arch = new_deb.exec_command('uname -r')
 
 # Defining the packages that needs to be installed
-# TODO: Check the Debian Version and get the paths based on it.
-pkgs = "vim vim-scripts vim-doc zip unzip rar p7zip bzip2 less links telnet locate openssh-server sysv-rc-conf \
+case os_version_name
+  when 'squeeze'
+    pkgs = "vim vim-scripts vim-doc zip unzip rar p7zip bzip2 less links telnet locate openssh-server sysv-rc-conf \
 rsync build-essential linux-headers-#{arch} libncurses5-dev ntpdate postfix cmake sudo git makepasswd debian-archive-keyring"
+  when 'wheezy'
+    pkgs = "vim vim-scripts vim-doc zip unzip rar p7zip bzip2 less links telnet locate openssh-server sysv-rc-conf \
+rsync build-essential linux-headers-#{arch} libncurses5-dev ntpdate postfix cmake sudo git makepasswd debian-archive-keyring"
+  when 'jessie'
+    pkgs = "vim vim-scripts vim-doc zip unzip rar p7zip bzip2 less links telnet locate openssh-server sysv-rc-conf \
+rsync build-essential linux-headers-#{arch} libncurses5-dev ntpdate postfix cmake sudo git makepasswd debian-archive-keyring"
+end
 
 # Updating the keyrings
-new_deb.conf_keyrings('pgpkeys.mit.edu',keys=%w(1F41B907 A2098A6E))
+new_deb.conf_keyrings('pgpkeys.mit.edu',keys=%w(1F41B907 A2098A6E 65558117))
 
 # Installing the packages
 new_deb.install_packages(pkgs,'Base Packages')
 
 # Defining the tool packages that needs to be installed
-# TODO: Check the Debian Version and get the paths based on it.
-tool_pkgs = 'atsar tcpstat ifstat dstat procinfo pciutils dmidecode htop nmap tcpdump usbutils strace ltrace hdparm \
-sdparm iotop atop iotop iftop sntop powertop itop kerneltop dos2unix tofrodos chkconfig zsh xz-utils unrar libjs-jquery arp-scan'
+case os_version_name
+  when 'squeeze'
+    tool_pkgs = 'atsar tcpstat ifstat dstat procinfo pciutils dmidecode htop nmap tcpdump usbutils strace ltrace hdparm fish \
+sdparm atop iotop iftop sntop powertop itop kerneltop dos2unix tofrodos chkconfig zsh xz-utils unrar libjs-jquery arp-scan'
+  when 'wheezy'
+    tool_pkgs = 'atsar tcpstat ifstat dstat procinfo pciutils dmidecode htop nmap tcpdump usbutils strace ltrace hdparm fish \
+sdparm atop iotop iftop sntop powertop itop kerneltop dos2unix tofrodos chkconfig zsh xz-utils unrar libjs-jquery arp-scan'
+  when 'jessie'
+    tool_pkgs = 'atsar tcpstat ifstat dstat procinfo pciutils dmidecode htop nmap tcpdump usbutils strace ltrace hdparm fish \
+sdparm atop iotop iftop sntop powertop itop kerneltop dos2unix tofrodos chkconfig zsh xz-utils unrar libjs-jquery arp-scan'
+end
 
 # Installing the packages
 new_deb.install_packages(tool_pkgs,'Tools Packages')
@@ -210,5 +271,9 @@ new_deb.install_packages(tool_pkgs,'Tools Packages')
 # Getting the vimrc
 new_deb.download_files(vimrc_path,vimrc_url)
 
+# Getting the bashrc configuration file
+new_deb.download_files(bashrc_root_path,bashrc_root_url)
+new_deb.download_files(bashrc_common_path,bashrc_common_url)
+
 # Converting the file
-new_deb.convert_file(files=["#{vimrc_path}"])
+new_deb.convert_file(files=["#{vimrc_path}","#{bashrc_root_path}","#{bashrc_common_path}"])

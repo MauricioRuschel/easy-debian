@@ -1,0 +1,24 @@
+# OFFICIAL REPOSITORY
+deb http://ftp.br.debian.org/debian squeeze main contrib non-free
+deb-src http://ftp.br.debian.org/debian squeeze main contrib non-free
+
+# SECURITY UPDATE REPOSITORY
+deb http://security.debian.org/ squeeze/updates main contrib non-free
+deb-src http://security.debian.org/ squeeze/updates main contrib non-free
+
+# PROPOSE UPDATE REPOSITORY
+deb http://ftp.br.debian.org/debian squeeze-proposed-updates main contrib non-free
+deb-src http://ftp.br.debian.org/debian squeeze-proposed-updates main contrib non-free
+
+# BACKPORT  REPOSITORY http://backports.debian.org/Mirrors/
+#deb http://www.backports.org/debian squeeze-backports main contrib non-free
+#deb-src http://www.backports.org/debian squeeze-backports main contrib non-free
+
+# MULTIMEDIA REPOSITORY
+#deb http://ftp.br.debian.org/debian-multimedia/ squeeze main
+#deb http://www.debian-multimedia.org squeeze main
+
+# PHP5 BACKPORT
+#deb http://packages.dotdeb.org squeeze-php54 all
+#deb-src http://packages.dotdeb.org squeeze-php54 all
+
