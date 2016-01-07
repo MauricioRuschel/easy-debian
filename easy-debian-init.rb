@@ -126,7 +126,7 @@ module EasyDebian
     # TODO: needs to validate if the mode is interactive or not
     def install_packages(packages,comment)
       aptitude = '/usr/bin/aptitude'
-      no_interactive = 'DEBIAN_FRONTEND=noninteractive'
+      no_interactive = 'export DEBIAN_FRONTEND=noninteractive'
 
       puts "#{Tty.blue}Updating Repositories #{Tty.reset}"
       update_repo = system "#{aptitude} update"
@@ -139,7 +139,7 @@ module EasyDebian
       end
 
       puts "#{Tty.blue}Updating the System #{Tty.reset}"
-      update_system = system "#{aptitude} dist-upgrade -y"
+      update_system = system ("#{no_interactive}; #{aptitude} safe-upgrade -y")
       sleep_time(2)
 
       if update_system
@@ -149,7 +149,7 @@ module EasyDebian
       end
 
       puts "#{Tty.blue}Installing Packages: #{Tty.white}#{comment} #{Tty.reset}"
-      install_pkgs = system "#{no_interactive}; #{aptitude} install #{packages} -y"
+      install_pkgs = system ("#{no_interactive}; #{aptitude} install #{packages} -y")
       sleep_time(2)
 
       if install_pkgs
@@ -229,12 +229,16 @@ module EasyDebian
     # Method to configure the crontab
     def conf_crontab(path)
       crontab = '/usr/bin/crontab'
-      bkp_crontab = system("#{crontab} -l > crontab.bkp")
-      check_status(bkp_crontab, "Creating backup of #{Tty.white}crontab#{Tty.blue} file")
-      remove_crontab = system("#{crontab} -r")
-      check_status(remove_crontab, "Removing the #{Tty.white}crontab#{Tty.blue} configuration")
+      root_crontab = '/var/spool/cron/crontabs/root'
+      # Added a new validation to make sure the root crontab configuration file exists.
+      if File.exists?(root_crontab)
+        bkp_crontab = system("#{crontab} -l > crontab.bkp")
+        check_status(bkp_crontab, "Creating backup of #{Tty.white}crontab #{Tty.blue}")
+        remove_crontab = system("#{crontab} -r")
+        check_status(remove_crontab, "Removing the #{Tty.white}crontab configuration #{Tty.blue}")
+      end
       add_crontab = system("#{crontab} #{path}")
-      check_status(add_crontab, "Adding the new #{Tty.white}crontab#{Tty.blue} configuration")
+      check_status(add_crontab, "Adding the new #{Tty.white}crontab configuration #{Tty.blue}")
     end
 
     # Method to get git repositories
@@ -249,9 +253,12 @@ module EasyDebian
         if !copy.empty?
             if Dir.exists?(copy)
               copy_repo = system("#{cp} -Rfa #{path}/* #{copy}")
-              check_status(copy_repo, "Copying the #{Tty.white}#{comment} #{Tty.blue}to#{Tty.white}#{copy} ")
+              check_status(copy_repo, "Copying the #{Tty.white}#{comment} #{Tty.blue}to #{Tty.white}#{copy} ")
             else
-              puts "#{Tty.red}The directory #{Tty.white}#{copy} #{Tty.red}does not exists!#{Tty.reset}"
+	      # If the firmware directory into /lib does not exists copy as it.
+	      copy.chomp!('/')
+	      copy_repo = system("#{cp} -Rfa #{path} #{copy}")
+              check_status(copy_repo, "Copying the #{Tty.white}#{comment} #{Tty.blue}to #{Tty.white}#{copy} ")
             end
         end
       else
@@ -409,3 +416,6 @@ new_deb.convert_file(files=["#{vimrc_path}","#{bashrc_root_path}","#{bashrc_comm
 
 # Getting the new firmwares
 new_deb.get_git(firmware_path,firmware_url,'Kernel Firmwares',firmware_copy_path)
+
+# The last message
+puts "#{Tty.white}Now you need to restart the machine to reload all the new configurations! #{Tty.reset}"
