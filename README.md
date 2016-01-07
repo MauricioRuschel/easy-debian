@@ -17,6 +17,25 @@ Easy-Debian is a Ruby script that can help you to up and running with Debian GNU
 
 ## How to use
 
+**Note**
+
+If you got some error such as following
+```
+/usr/bin/env: ruby: No such file or directory
+
+or
+
+usr/bin/env: ruby: Arquivo ou diretório não encontrado
+```
+
+You have no ruby installed on your system, so you need to install like this
+
+```
+apt-get install ruby
+```
+
+If you have no sources.list configure please pick one of the sources.list files from the easy-debian and overwrite the content of the sources.list into your Debian, make sure that you are using the correcty one otherwise you will probably have a lot of problems...
+
 You can install the **curl** package in your Debian GNU/Linux and execute the following command line as root user
 
 ```bash
