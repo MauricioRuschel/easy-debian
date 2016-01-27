@@ -3,10 +3,10 @@
 #-------------------------------------------------------------------------
 # Easy-Debian
 #
-# Site  : http://wiki.dksh.com.br
-# Author : Douglas Q. dos Santos <douglas.dksh@gmail.com>
-# Management: Douglas Q. dos Santos <douglas.dksh@gmail.com>
-# GitHub: https://github.com/douglas-dksh/easy-debian
+# Site  : http://wiki.douglasqsantos.com.br
+# Author : Douglas Q. dos Santos <douglas.q.santos@gmail.com>
+# Management: Douglas Q. dos Santos <douglas.q.santos@gmail.com>
+# GitHub: https://github.com/douglasqsantos/easy-debian
 #
 #-------------------------------------------------------------------------
 # Note: This Ruby Script set up the initial configuration to Debian
@@ -20,7 +20,7 @@
 # set up the repositories and install some packets
 #--------------------------------------------------------------------------
 #
-# How to use: https://github.com/douglas-dksh/easy-debian
+# How to use: https://github.com/douglasqsantos/easy-debian
 #
 #--------------------------------------------------------------------------
 #License: MIT license http://opensource.org/licenses/MIT
@@ -350,11 +350,11 @@ firmware_path = '/usr/src/firmware'
 firmware_copy_path = '/lib/firmware/'
 
 # Defining some urls
-debian_rep_url = "https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/sources-#{os_version_name}.list"
-vimrc_url = 'https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/vimrc'
-bashrc_root_url = 'https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/bashrc_root'
-bashrc_common_url = 'https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/bashrc_common'
-crontab_url = 'https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/crontab'
+debian_rep_url = "https://raw.githubusercontent.com/douglasqsantos/easy-debian/master/sources-#{os_version_name}.list"
+vimrc_url = 'https://raw.githubusercontent.com/douglasqsantos/easy-debian/master/vimrc'
+bashrc_root_url = 'https://raw.githubusercontent.com/douglasqsantos/easy-debian/master/bashrc_root'
+bashrc_common_url = 'https://raw.githubusercontent.com/douglasqsantos/easy-debian/master/bashrc_common'
+crontab_url = 'https://raw.githubusercontent.com/douglasqsantos/easy-debian/master/crontab'
 firmware_url = 'git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git'
 
 # Getting the repositories

@@ -79,7 +79,7 @@ The current version support the following Debian GNU/Linux Versions
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within easy-debian, please send an e-mail to Douglas Quintiliano dos Santos at douglas.dksh@gmail.com. All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within easy-debian, please send an e-mail to Douglas Quintiliano dos Santos at douglas.q.santos@gmail.com. All security vulnerabilities will be promptly addressed.
 
 ### License
 

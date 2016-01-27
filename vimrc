@@ -3,7 +3,7 @@
 " do not needs to rely on the system because the color schema is
 " inside the vimrc configuration file
 " Vim color file
-" Maintainer:  Douglas Quintiliano dos Santos <douglas.dksh@gmail.com>
+" Maintainer:  Douglas Quintiliano dos Santos <douglas.q.santos@gmail.com>
 " Last Change: $Date: 2015/12/30 10:21 $
 
 " cool help screens
@@ -137,9 +137,9 @@ fun! InsertHeadBash()
    call append(1, "#-------------------------------------------------------------------------")
    call append(2, "# Name: " . expand('%:p'))
    call append(3, "#")
-   call append(4, "# Site: http://wiki.dksh.com.br")
-   call append(5, "# Autor: Douglas Quintiliano dos Santos <douglas.dksh@gmail.com>")
-   call append(6, "# Management: Douglas Quintiliano dos Santos <douglas.dksh@gmail.com>")
+   call append(4, "# Site: http://wiki.douglasqsantos.com.br")
+   call append(5, "# Autor: Douglas Quintiliano dos Santos <douglas.q.santos@gmail.com>")
+   call append(6, "# Management: Douglas Quintiliano dos Santos <douglas.q.santos@gmail.com>")
    call append(7, "#")
    call append(8, "#-------------------------------------------------------------------------")
    call append(9, "# Note: <note about the script>")
@@ -225,7 +225,7 @@ map <M-left> <ESC>:resize -2 <CR>
 "append the current time such eas %d/%m/%y %H:%M:%S in the current line
 iab ,d <C-R>=strftime("%d/%m/%y %H:%M:%S")<CR>
 "append the email in the current line
-iab ,m <douglas.dksh@gmail.com>
+iab ,m <douglas.q.santos@gmail.com>
 "
 "" (strftime) is a built function
 iab YDATE <C-R>=strftime("%d/%m/%y %H:%M:%S")<CR>
