@@ -39,12 +39,12 @@ If you have no sources.list configure please pick one of the sources.list files 
 You can install the **curl** package in your Debian GNU/Linux and execute the following command line as root user
 
 ```bash
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/easy-debian-init.rb)"
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/douglasqsantos/easy-debian/master/easy-debian-init.rb)"
 ```
 
 You can also download the easy-debian-init.rb and execute it via command line as root user as following
 ````bash
-wget -c https://raw.githubusercontent.com/douglas-dksh/easy-debian/master/easy-debian-init.rb
+wget -c https://raw.githubusercontent.com/douglasqsantos/easy-debian/master/easy-debian-init.rb
 ```
 
 Give the easy-debian-init.rb execution permission
