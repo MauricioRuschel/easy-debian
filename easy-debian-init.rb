@@ -349,9 +349,18 @@ crontab_path = '/tmp/crontab'
 firmware_path = '/usr/src/firmware'
 firmware_copy_path = '/lib/firmware/'
 
+# Needs to check if the vim74 exists otherwise use the vim73 the older one
+if Dir.exists?("/usr/share/vim/vim74/syntax/")
+  nginx_vimrc_path = "/usr/share/vim/vim74/syntax/nginx.vim"
+else
+  nginx_vimrc_path = "/usr/share/vim/vim73/syntax/nginx.vim"
+end
+
+
 # Defining some urls
 debian_rep_url = "https://raw.githubusercontent.com/douglasqsantos/easy-debian/master/sources-#{os_version_name}.list"
 vimrc_url = 'https://raw.githubusercontent.com/douglasqsantos/easy-debian/master/vimrc'
+nginx_vim_url  = 'https://raw.githubusercontent.com/douglasqsantos/easy-debian/master/nginx.vim'
 bashrc_root_url = 'https://raw.githubusercontent.com/douglasqsantos/easy-debian/master/bashrc_root'
 bashrc_common_url = 'https://raw.githubusercontent.com/douglasqsantos/easy-debian/master/bashrc_common'
 crontab_url = 'https://raw.githubusercontent.com/douglasqsantos/easy-debian/master/crontab'
@@ -367,13 +376,16 @@ arch = new_deb.exec_command('uname -r')
 case os_version_name
   when 'squeeze'
     pkgs = "vim vim-scripts vim-doc zip unzip rar p7zip bzip2 less links telnet locate openssh-server sysv-rc-conf \
-rsync build-essential linux-headers-#{arch} libncurses5-dev ntpdate postfix cmake sudo git makepasswd debian-archive-keyring"
+rsync build-essential linux-headers-#{arch} libncurses5-dev ntpdate postfix cmake sudo git makepasswd debian-archive-keyring \
+ ruby-dev pkg-config ruby-rmagick iproute2 iptables"
   when 'wheezy'
     pkgs = "vim vim-scripts vim-doc zip unzip rar p7zip bzip2 less links telnet locate openssh-server sysv-rc-conf \
-rsync build-essential linux-headers-#{arch} libncurses5-dev ntpdate postfix cmake sudo git makepasswd debian-archive-keyring"
+rsync build-essential linux-headers-#{arch} libncurses5-dev ntpdate postfix cmake sudo git makepasswd debian-archive-keyring \
+ruby-dev pkg-config ruby-rmagick iproute2 iptables"
   when 'jessie'
     pkgs = "vim vim-scripts vim-doc zip unzip rar p7zip bzip2 less links telnet locate openssh-server sysv-rc-conf \
-rsync build-essential linux-headers-#{arch} libncurses5-dev ntpdate postfix cmake sudo git makepasswd debian-archive-keyring"
+rsync build-essential linux-headers-#{arch} libncurses5-dev ntpdate postfix cmake sudo git makepasswd debian-archive-keyring \
+ruby-dev pkg-config ruby-rmagick iproute2 iptables"
 end
 
 # Updating the keyrings
@@ -401,6 +413,9 @@ new_deb.install_packages(tool_pkgs,'Tools Packages')
 # Getting the vimrc
 new_deb.download_files(vimrc_path,vimrc_url)
 
+# Getting the nginx vim syntax
+new_deb.download_files(nginx_vimrc_path,nginx_vim_url)
+
 # Getting the bashrc configuration file
 new_deb.download_files(bashrc_root_path,bashrc_root_url)
 new_deb.download_files(bashrc_common_path,bashrc_common_url)
@@ -412,7 +427,7 @@ new_deb.download_files(crontab_path,crontab_url)
 new_deb.conf_crontab(crontab_path)
 
 # Converting the file
-new_deb.convert_file(files=["#{vimrc_path}","#{bashrc_root_path}","#{bashrc_common_path}"])
+new_deb.convert_file(files=["#{vimrc_path}","#{bashrc_root_path}","#{bashrc_common_path}","#{nginx_vimrc_path}"])
 
 # Getting the new firmwares
 new_deb.get_git(firmware_path,firmware_url,'Kernel Firmwares',firmware_copy_path)

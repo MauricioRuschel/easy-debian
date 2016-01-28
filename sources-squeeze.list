@@ -22,3 +22,6 @@ deb-src http://ftp.br.debian.org/debian squeeze-proposed-updates main contrib no
 #deb http://packages.dotdeb.org squeeze-php54 all
 #deb-src http://packages.dotdeb.org squeeze-php54 all
 
+# Nginx Official Repository
+deb http://nginx.org/packages/debian/ squeeze nginx
+deb-src http://nginx.org/packages/debian/ squeeze nginx

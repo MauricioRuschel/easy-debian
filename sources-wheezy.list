@@ -26,3 +26,6 @@ deb-src http://ftp.br.debian.org/debian wheezy-proposed-updates main contrib non
 #deb http://packages.dotdeb.org wheezy-php56 all
 #deb-src http://packages.dotdeb.org wheezy-php56 all
 
+# Nginx Official Repository
+deb http://nginx.org/packages/debian/ wheezy nginx
+deb-src http://nginx.org/packages/debian/ wheezy nginx

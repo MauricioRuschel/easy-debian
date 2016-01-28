@@ -25,3 +25,7 @@ deb-src http://ftp.br.debian.org/debian jessie-proposed-updates main contrib non
 # PHP5 BACKPORT
 #deb http://packages.dotdeb.org jessie all
 #deb-src http://packages.dotdeb.org jessie all
+
+# Nginx Official Repository
+deb http://nginx.org/packages/debian/ jessie nginx
+deb-src http://nginx.org/packages/debian/ jessie nginx
