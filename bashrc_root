@@ -1,12 +1,7 @@
 # ~/.bashrc
 
-### COLORS AVAILABLE
-GREY="[\033[01;30m\]" RED="\033[01;31m\]" GREEN="\033[01;32m\]" YELLOW="\033[01;33m\]"
-BLUE="\033[01;34m\]" PURPLE="\033[01;35m\]" CYAN="\033[01;36m\]" WHITE="\033[01;37m\]"
-CLOSE="\033[00m\]"
-
 # TIPS ABOUT PS1: http://www.cyberciti.biz/tips/howto-linux-unix-bash-shell-setup-prompt.html
-PS1="${RED}\u@\h${CLOSE}:${BLUE}\w${CLOSE}# "
+PS1='\[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]# '
 
 # SET UP SOME ALIAS
 alias ls='ls --color=auto'
