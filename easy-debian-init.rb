@@ -389,7 +389,7 @@ ruby-dev pkg-config ruby-rmagick iproute2 iptables"
 end
 
 # Updating the keyrings
-new_deb.conf_keyrings('pgpkeys.mit.edu',keys=%w(1F41B907 A2098A6E 65558117))
+new_deb.conf_keyrings('pgpkeys.mit.edu',keys=%w(1F41B907 A2098A6E 65558117 7BD9BF62))
 
 # Installing the packages
 new_deb.install_packages(pkgs,'Base Packages')
