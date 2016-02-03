@@ -349,8 +349,6 @@ vimrc_path = "#{Dir.home}/.vimrc"
 bashrc_root_path = "#{Dir.home}/.bashrc"
 bashrc_common_path = "/etc/skel/.bashrc"
 crontab_path = '/tmp/crontab'
-firmware_path = '/usr/src/firmware'
-firmware_copy_path = '/lib/firmware/'
 
 # Needs to check if the vim74 exists otherwise use the vim73 the older one
 if Dir.exists?("/usr/share/vim/vim74/syntax/")
@@ -424,9 +422,6 @@ new_deb.conf_crontab(crontab_path)
 
 # Converting the file
 new_deb.convert_file(files=["#{vimrc_path}","#{bashrc_root_path}","#{bashrc_common_path}","#{nginx_vimrc_path}"])
-
-# Getting the new firmwares
-new_deb.get_git(firmware_path,firmware_url,'Kernel Firmwares',firmware_copy_path)
 
 # The last message
 puts "#{Tty.white}Now you need to restart the machine to reload all the new configurations! #{Tty.reset}"

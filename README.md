@@ -28,10 +28,10 @@ or
 usr/bin/env: ruby: Arquivo ou diretório não encontrado
 ```
 
-You have no ruby installed on your system, so you need to install like this
+You have no ruby installed on your system, so you need to install the ruby, let's install another depencies to make sure that everything will work properly
 
 ```
-apt-get install ruby
+apt-get install ruby curl aptitude -y
 ```
 
 If you have no sources.list configure please pick one of the sources.list files from the easy-debian and overwrite the content of the sources.list into your Debian, make sure that you are using the correcty one otherwise you will probably have a lot of problems...
@@ -73,7 +73,6 @@ new_deb = EasyDebian::Core.new()
 This is the beta version yet and I am working to improve and add some new features and this version is working properly.
 
 The current version support the following Debian GNU/Linux Versions
-* Squeeze
 * Wheezy
 * Jessie
 
