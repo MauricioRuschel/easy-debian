@@ -31,7 +31,7 @@ usr/bin/env: ruby: Arquivo ou diretório não encontrado
 You have no ruby installed on your system, so you need to install the ruby, let's install another depencies to make sure that everything will work properly
 
 ```
-apt-get install ruby curl aptitude -y
+apt-get install ruby curl aptitude wget -y
 ```
 
 If you have no sources.list configure please pick one of the sources.list files from the easy-debian and overwrite the content of the sources.list into your Debian, make sure that you are using the correcty one otherwise you will probably have a lot of problems...
