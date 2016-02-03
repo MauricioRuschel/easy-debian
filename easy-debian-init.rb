@@ -215,7 +215,7 @@ module EasyDebian
       add_pubring = system "#{apt_key} add ~root/.gnupg/pubring.gpg"
       check_status(add_pubring,"Adding the #{Tty.white}Pubring")
       #TODO: Adjust this method to work as bellow.
-      docker_key = system("wget -qO- https://get.docker.com/gpg | apt-key add -")
+      docker_key = system("apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D")
       check_status(docker_key,"Adding the #{Tty.white}Docker Key")
       nginx_key = system("wget -qO- http://nginx.org/packages/keys/nginx_signing.key | apt-key add -")
       check_status(nginx_key,"Adding the #{Tty.white}Nginx Key")
