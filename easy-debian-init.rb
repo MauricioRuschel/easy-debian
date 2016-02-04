@@ -352,14 +352,6 @@ crontab_path = '/tmp/crontab'
 firmware_path = '/usr/src/firmware'
 firmware_copy_path = '/lib/firmware/'
 
-# Needs to check if the vim74 exists otherwise use the vim73 the older one
-if Dir.exists?("/usr/share/vim/vim74/syntax/")
-  nginx_vimrc_path = "/usr/share/vim/vim74/syntax/nginx.vim"
-else
-  nginx_vimrc_path = "/usr/share/vim/vim73/syntax/nginx.vim"
-end
-
-
 # Defining some urls
 debian_rep_url = "https://raw.githubusercontent.com/douglasqsantos/easy-debian/master/sources-#{os_version_name}.list"
 vimrc_url = 'https://raw.githubusercontent.com/douglasqsantos/easy-debian/master/vimrc'
@@ -407,6 +399,13 @@ end
 new_deb.install_packages(tool_pkgs,'Tools Packages')
 
 # Getting the vimrc
+# Needs to check if the vim74 exists otherwise use the vim73 the older one
+if Dir.exists?("/usr/share/vim/vim74/syntax/")
+  nginx_vimrc_path = "/usr/share/vim/vim74/syntax/nginx.vim"
+else
+  nginx_vimrc_path = "/usr/share/vim/vim73/syntax/nginx.vim"
+end
+
 new_deb.download_files(vimrc_path,vimrc_url)
 
 # Getting the nginx vim syntax
